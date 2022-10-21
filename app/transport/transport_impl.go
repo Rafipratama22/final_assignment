@@ -26,7 +26,10 @@ func (t *Transport) RegisterUser(c *gin.Context) {
 
 	res, httpStatus := t.usecase.RegisterUser(body)
 
-	c.JSON(httpStatus, res)
+	c.JSON(httpStatus, gin.H{
+		"Message": "Success",
+		"Payload": res,
+	})
 }
 
 func (t *Transport) LoginUser(c *gin.Context) {
@@ -37,10 +40,16 @@ func (t *Transport) LoginUser(c *gin.Context) {
 		resp := map[string]interface{}{
 			"message": err.Error(),
 		}
-		c.JSON(httpStatus, resp)
+		c.JSON(httpStatus, gin.H{
+			"Message": "Failed",
+			"Error":   resp,
+		})
 		return
 	} else {
-		c.JSON(httpStatus, res)
+		c.JSON(httpStatus, gin.H{
+			"Message": "Success",
+			"Payload": res,
+		})
 		return
 	}
 }
@@ -53,10 +62,16 @@ func (t *Transport) UpdateUser(c *gin.Context) {
 		resp := map[string]interface{}{
 			"message": err.Error(),
 		}
-		c.JSON(httpStatus, resp)
+		c.JSON(httpStatus, gin.H{
+			"Message": "Failed",
+			"Error":   resp,
+		})
 		return
 	} else {
-		c.JSON(http.StatusOK, res)
+		c.JSON(http.StatusOK, gin.H{
+			"Message": "Success",
+			"Payload": res,
+		})
 		return
 	}
 }
@@ -70,10 +85,16 @@ func (t *Transport) DeleteUser(c *gin.Context) {
 		resp := map[string]interface{}{
 			"message": err.Error(),
 		}
-		c.JSON(httpStatus, resp)
+		c.JSON(httpStatus, gin.H{
+			"Message": "Failed",
+			"Error":   resp,
+		})
 		return
 	} else {
-		c.JSON(http.StatusOK, res)
+		c.JSON(http.StatusOK, gin.H{
+			"Message": "Success",
+			"Payload": res,
+		})
 		return
 	}
 }
@@ -83,10 +104,16 @@ func (t *Transport) CreatePhoto(c *gin.Context) {
 
 	res, httpStatus, err := t.usecase.CreatePhoto(&body)
 	if err != nil {
-		c.JSON(httpStatus, err)
+		c.JSON(httpStatus, gin.H{
+			"Message": "Failed",
+			"Error":   err.Error(),
+		})
 		return
 	} else {
-		c.JSON(httpStatus, res)
+		c.JSON(httpStatus, gin.H{
+			"Message": "Success",
+			"Payload": res,
+		})
 	}
 }
 
@@ -94,10 +121,16 @@ func (t *Transport) FindPhoto(c *gin.Context) {
 	req := c.MustGet("user_id").(request.FindReq)
 	res, httpStatus, err := t.usecase.FindPhoto(&req)
 	if err != nil {
-		c.JSON(httpStatus, err)
+		c.JSON(httpStatus, gin.H{
+			"Message": "Failed",
+			"Error":   err.Error(),
+		})
 		return
 	} else {
-		c.JSON(httpStatus, res)
+		c.JSON(httpStatus, gin.H{
+			"Message": "Success",
+			"Payload": res,
+		})
 	}
 }
 
@@ -106,10 +139,16 @@ func (t *Transport) UpdatePhoto(c *gin.Context) {
 	res, err := t.usecase.UpdatePhoto(&req)
 	fmt.Println(err, "error")
 	if err != nil {
-		c.JSON(http.StatusBadRequest, err)
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Message": "Failed",
+			"Error":   err.Error(),
+		})
 		return
 	} else {
-		c.JSON(http.StatusCreated, res)
+		c.JSON(http.StatusCreated, gin.H{
+			"Message": "Success",
+			"Payload": res,
+		})
 	}
 }
 
@@ -119,10 +158,16 @@ func (t *Transport) DeletePhoto(c *gin.Context) {
 	res, err := t.usecase.DeletePhoto(photo_id, user_id)
 	fmt.Println(err, "error")
 	if err != nil {
-		c.JSON(http.StatusBadRequest, err)
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Message": "Failed",
+			"Error":   err.Error(),
+		})
 		return
 	} else {
-		c.JSON(http.StatusCreated, res)
+		c.JSON(http.StatusCreated, gin.H{
+			"Message": "Success",
+			"Payload": res,
+		})
 	}
 }
 
@@ -131,10 +176,16 @@ func (t *Transport) CreateComment(c *gin.Context) {
 
 	res, httpStatus, err := t.usecase.CreateComment(&body)
 	if err != nil {
-		c.JSON(httpStatus, err)
+		c.JSON(httpStatus, gin.H{
+			"Message": "Failed",
+			"Error":   err.Error(),
+		})
 		return
 	} else {
-		c.JSON(httpStatus, res)
+		c.JSON(httpStatus, gin.H{
+			"Message": "Success",
+			"Payload": res,
+		})
 	}
 }
 
@@ -142,10 +193,16 @@ func (t *Transport) FindComment(c *gin.Context) {
 	req := c.MustGet("user_id").(request.FindCommentReq)
 	res, httpStatus, err := t.usecase.FindComment(&req)
 	if err != nil {
-		c.JSON(httpStatus, err)
+		c.JSON(httpStatus, gin.H{
+			"Message": "Failed",
+			"Error":   err.Error(),
+		})
 		return
 	} else {
-		c.JSON(httpStatus, res)
+		c.JSON(httpStatus, gin.H{
+			"Message": "Success",
+			"Payload": res,
+		})
 	}
 }
 
@@ -155,10 +212,16 @@ func (t *Transport) UpdateComment(c *gin.Context) {
 	fmt.Println(res, "RES TP")
 	fmt.Println(err, "error TP")
 	if err != nil {
-		c.JSON(http.StatusBadRequest, err)
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Message": "Failed",
+			"Error":   err.Error(),
+		})
 		return
 	} else {
-		c.JSON(http.StatusCreated, res)
+		c.JSON(http.StatusCreated, gin.H{
+			"Message": "Success",
+			"Payload": res,
+		})
 	}
 }
 
@@ -168,10 +231,16 @@ func (t *Transport) DeleteComment(c *gin.Context) {
 	res, err := t.usecase.DeleteComment(comment_id, user_id)
 	fmt.Println(err, "error")
 	if err != nil {
-		c.JSON(http.StatusBadRequest, err)
+		c.JSON(http.StatusBadRequest, gin.H{
+			"Message": "Failed",
+			"Error":   err.Error(),
+		})
 		return
 	} else {
-		c.JSON(http.StatusCreated, res)
+		c.JSON(http.StatusCreated, gin.H{
+			"Message": "Success",
+			"Payload": res,
+		})
 	}
 }
 
@@ -180,10 +249,16 @@ func (t *Transport) CreateSocialMedia(c *gin.Context) {
 	userID := c.MustGet("user_id")
 	res, httpStatus, err := t.usecase.CreateSocialMedia(body, userID)
 	if err != nil {
-		c.JSON(httpStatus, err)
+		c.JSON(httpStatus, gin.H{
+			"Message": "Failed",
+			"Error":   err.Error(),
+		})
 		return
 	} else {
-		c.JSON(httpStatus, res)
+		c.JSON(httpStatus, gin.H{
+			"Message": "Success",
+			"Payload": res,
+		})
 	}
 }
 
@@ -191,10 +266,16 @@ func (t *Transport) FindSocialMedia(c *gin.Context) {
 	userID := c.MustGet("user_id")
 	res, httpStatus, err := t.usecase.FindSocialMedia(userID)
 	if err != nil {
-		c.JSON(httpStatus, err)
+		c.JSON(httpStatus, gin.H{
+			"Message": "Failed",
+			"Error":   err.Error(),
+		})
 		return
 	} else {
-		c.JSON(httpStatus, res)
+		c.JSON(httpStatus, gin.H{
+			"Message": "Success",
+			"Payload": res,
+		})
 	}
 }
 
@@ -204,10 +285,16 @@ func (t *Transport) UpdateSocialMedia(c *gin.Context) {
 	socialMediaID := c.MustGet("social_media_id")
 	res, httpStatus, err := t.usecase.UpdateSocialMedia(body, userID, socialMediaID)
 	if err != nil {
-		c.JSON(httpStatus, err)
+		c.JSON(httpStatus, gin.H{
+			"Message": "Failed",
+			"Error":   err.Error(),
+		})
 		return
 	} else {
-		c.JSON(httpStatus, res)
+		c.JSON(httpStatus, gin.H{
+			"Message": "Success",
+			"Payload": res,
+		})
 	}
 }
 
@@ -215,9 +302,15 @@ func (t *Transport) DeleteSocialMedia(c *gin.Context) {
 	socialMediaID := c.MustGet("social_media_id")
 	res, httpStatus, err := t.usecase.DeleteSocialMedia(socialMediaID)
 	if err != nil {
-		c.JSON(httpStatus, err)
+		c.JSON(httpStatus, gin.H{
+			"Message": "Failed",
+			"Error":   err.Error(),
+		})
 		return
 	} else {
-		c.JSON(httpStatus, res)
+		c.JSON(httpStatus, gin.H{
+			"Message": "Success",
+			"Payload": res,
+		})
 	}
 }
